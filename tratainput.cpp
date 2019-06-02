@@ -15,17 +15,18 @@ bool comparaFloats(float i, float j){
 }
 
 void trataInput(char inputName[], char LPPath[]){
-    int n, m, auxWeight, auxQtdSubsets, auxSubset, auxLP;
+    cout << inputName << endl << endl << LPPath << endl;
+    int n, m, auxWeight, auxQtdSubsets, auxSubset;
     int totalWeight = 0;
     float deterministicFrequency = 0;
-    float LPWeight;
+    double LPWeight, auxLP;
 
     ifstream inputSCP;
     inputSCP.open(inputName);
     inputSCP >> n >> m;
 
-    fstream costLog;
-    costLog.open("costLogDeterministicRounding.txt", std::fstream::in | std::fstream::out | std::fstream::app);
+    //fstream costLog;
+    //costLog.open("costLogDeterministicRounding.txt", std::fstream::in | std::fstream::out | std::fstream::app);
 
     vector <Subset> Subsets(m);
     vector < vector <int> > elementos(n);
@@ -43,7 +44,7 @@ void trataInput(char inputName[], char LPPath[]){
         inputSCP >> auxQtdSubsets;
 
         if(deterministicFrequency < auxQtdSubsets)
-            deterministicFrequency = auxQtdSubsets
+            deterministicFrequency = auxQtdSubsets;
 
         for(int j = 0; j < auxQtdSubsets; j++){
             inputSCP >> auxSubset;
@@ -52,14 +53,14 @@ void trataInput(char inputName[], char LPPath[]){
             Subsets[auxSubset-1].adicionaElemento(i);
         }
     }
-
     inputSCP.close();
-
     ifstream LPFile;
     LPFile.open(LPPath);
-    LPFile >> LPWeight;
-    deterministicFrequency = 1/deterministicFrequency;
 
+    LPFile >> LPWeight;
+    cout << LPWeight << endl;
+    int freq = deterministicFrequency;
+    deterministicFrequency = 1/deterministicFrequency;
     for(int i = 0; i < m; i++){
         LPFile >> auxLP;
 
@@ -71,7 +72,10 @@ void trataInput(char inputName[], char LPPath[]){
     }
 
     cout << "Total cover cost: " << totalWeight << endl;
-    costLog << totalWeight << endl;
+    //costLog << freq << endl;
+    inputSCP.close();
+    LPFile.close();
+    //costLog.close();
     /*for(unsigned int i = 0; i < subconjuntosEscolhidos.size(); i++){
         cout << subconjuntosEscolhidos[i]+1 << " ";
     }*/
